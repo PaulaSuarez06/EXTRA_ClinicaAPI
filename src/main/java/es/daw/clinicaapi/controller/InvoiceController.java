@@ -6,17 +6,18 @@ import es.daw.clinicaapi.service.InvoiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/reports")
+@RequestMapping("/api/appointments")
 @RequiredArgsConstructor
 public class InvoiceController {
 
     private final InvoiceService invoiceService;
 
-    @GetMapping("/{id}/invoice")
-    //SEGURIDAD PENDIENTE PARA JUEVES 19 FEBRERO
+    @PostMapping("/{id}/invoice")
+    @PreAuthorize("hasAnyRole('ADMIN','BILLING')")
     public ResponseEntity<InvoiceResponse> issueInvoice(
             @PathVariable("id") Long appointmentId,
             @RequestBody InvoiceIssueRequest request

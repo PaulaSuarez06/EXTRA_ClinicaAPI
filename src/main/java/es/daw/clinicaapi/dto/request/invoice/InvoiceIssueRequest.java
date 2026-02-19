@@ -1,7 +1,9 @@
 package es.daw.clinicaapi.dto.request.invoice;
 
 
-public record InvoiceIssueRequest(
+import java.util.List;
 
+public record InvoiceIssueRequest(
+    List<InvoiceLineCreateRequest> lines
 ) {}
 

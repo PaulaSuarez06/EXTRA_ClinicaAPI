@@ -38,6 +38,7 @@ public class AppUser implements UserDetails {
     )
     private Set<Role> roles = new HashSet<>();
 
+    // ------------------------------------
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -45,7 +46,8 @@ public class AppUser implements UserDetails {
 
         return roles.stream()
                 .map(role -> role.getName())
-                .map(name -> "ROLE_" + name)
+                //.map(name -> "ROLE_" + name)
+                .map(name -> name.startsWith("ROLE_") ? name : "ROLE_" + name)
                 .map(SimpleGrantedAuthority::new)
                 .toList();
     }
