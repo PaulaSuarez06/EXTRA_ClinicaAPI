@@ -12,39 +12,40 @@ public class ApiExceptionHandler {
 
     // 404 Not Found
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<String> handleNotFound(NotFoundException ex) {
+    public ResponseEntity<ApiErrorResponse> handleNotFound(NotFoundException ex) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
-                .body(ex.getMessage());
+                .body(new ApiErrorResponse(ex.getMessage()));
     }
 
     // 422 Unprocessable Entity
     @ExceptionHandler(BusinessRuleException.class)
-    public ResponseEntity<String> handleBusiness(BusinessRuleException ex) {
+    public ResponseEntity<ApiErrorResponse> handleBusiness(BusinessRuleException ex) {
         return ResponseEntity
                 .status(HttpStatus.UNPROCESSABLE_ENTITY)
-                .body(ex.getMessage());
+                .body(new ApiErrorResponse(ex.getMessage()));
     }
 
     // 400 Bad Request
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<String> handleBadRequest(BadRequestException ex) {
+    public ResponseEntity<ApiErrorResponse> handleBadRequest(BadRequestException ex) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(ex.getMessage());
+                .body(new ApiErrorResponse(ex.getMessage()));
     }
 
     // 409 Conflict
     @ExceptionHandler(ConflictException.class)
-    public ResponseEntity<String> handleConflict(ConflictException ex) {
+    public ResponseEntity<ApiErrorResponse> handleConflict(ConflictException ex) {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
-                .body(ex.getMessage());
+                .body(new ApiErrorResponse(ex.getMessage()));
     }
 
     // 400 - Validaciones JSR-380
+    // MEJORA EXTRAORDINARIA: usar un dto de error más complejo para tener un array de errores con sus mensajes...
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<String> handleValidation(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ApiErrorResponse> handleValidation(MethodArgumentNotValidException ex) {
 
         String message = ex.getBindingResult()
                 .getFieldErrors()
@@ -54,6 +55,6 @@ public class ApiExceptionHandler {
 
         return ResponseEntity
                 .badRequest()
-                .body(message);
+                .body(new ApiErrorResponse(ex.getMessage()));
     }
 }
