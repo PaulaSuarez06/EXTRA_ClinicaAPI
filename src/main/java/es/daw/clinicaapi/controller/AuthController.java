@@ -38,4 +38,9 @@ public class AuthController {
 
     }
 
+    // PENDIENTE. REPASAR. EXTRAORDINARIA
+    // endpoint para dar de alta usuario
+    // endpoint para modificar pwd usuario
+
+
 }

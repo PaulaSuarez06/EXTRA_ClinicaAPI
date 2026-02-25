@@ -42,6 +42,8 @@ public class JwtService {
 
     /**
      * Devuelve la clave secreta usada para firmar y validar tokens.
+     * Reconstruye la misma Secretkey a partir de la cadena secreta codificada en Base64,
+     * asegurando que los tokens sean válidos incluso después de reiniciar el servidor.
      * @return
      */
     private SecretKey getSigningKey() {
